@@ -7,7 +7,7 @@ double-shear, bearing-type connections.
 
 Use the calculator directly in a browser:
 
-**https://kkzifeiyu.github.io/waam-bolted-connection-calculator/**
+**https://wenkang-zuo.github.io/waam-bolted-connection-calculator/**
 
 The online edition requires no installation and supports rapid single-case
 prediction. All calculations run locally in the browser, and no input data are
