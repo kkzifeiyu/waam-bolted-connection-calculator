@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Online nominal resistance calculator for WAAM stainless steel double-shear bolted connections">
+  <title>WAAM Stainless Steel Bolted Connection Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="brand"><span class="brand-mark">◇</span><div><small>WAAM STAINLESS STEEL</small><h1>Bolted Connection Calculator</h1></div></div>
+  <div class="online-status"><i></i>Online calculation · No data upload</div>
+</header>
+<main>
+  <section class="hero">
+    <div><p class="eyebrow">SINGLE-BOLT · DOUBLE-SHEAR · BEARING-TYPE</p><h2>WAAM Stainless Steel Bolted Connection Calculator</h2><p>Predict the nominal ultimate resistance and governing plate failure mode of the inner WAAM stainless steel plate using five design standards, a literature method and two proposed methods.</p></div>
+    <aside><small>NOMINAL RESISTANCE</small><strong>P<sub>u</sub> = min(P<sub>NSR</sub>, P<sub>SOF</sub>, P<sub>BF</sub>)</strong><span>Units: mm · MPa · kN</span></aside>
+  </section>
+  <nav class="tabs" aria-label="Calculator sections">
+    <button class="tab active" data-tab="single" type="button"><b>01</b>Single Prediction</button>
+    <button class="tab" data-tab="methods" type="button"><b>02</b>Methodology &amp; Scope</button>
+  </nav>
+
+  <section class="tab-panel active" id="single-panel">
+    <div class="calculator-grid">
+      <aside class="card input-card">
+        <header><div><p class="eyebrow">INPUT PARAMETERS</p><h3>Connection Input</h3></div><button id="reset-button" class="text-button" type="button">Restore example</button></header>
+        <form id="calculator-form" novalidate>
+          <fieldset><legend>Material properties</legend>
+            <label>Material<select name="Material"><option value="ASS">ASS · Austenitic stainless steel</option><option value="DSS">DSS · Duplex stainless steel</option></select></label>
+            <div class="two-col">
+              <label>Yield strength f<sub>y</sub> (θ direction)<span class="unit-input"><input name="fy_MPa_theta" type="number" min="0" step="any" value="380"><i>MPa</i></span></label>
+              <label>Ultimate strength f<sub>u</sub> (θ direction)<span class="unit-input"><input name="fu_MPa_theta" type="number" min="0" step="any" value="513.2"><i>MPa</i></span></label>
+            </div>
+            <label>Bolt ultimate strength f<sub>ub</sub><span class="unit-input"><input name="fub_MPa" type="number" min="0" step="any" value="800"><i>MPa</i></span></label>
+          </fieldset>
+          <fieldset><legend>Connection geometry</legend>
+            <div class="two-col">
+              <label>Plate thickness t<span class="unit-input"><input name="t_mm" type="number" min="0" step="any" value="3.43"><i>mm</i></span></label>
+              <label>Nominal bolt diameter d<sub>b</sub><span class="unit-input"><input name="db_mm" type="number" min="1" max="30" step="1" value="18"><i>mm</i></span></label>
+              <label>Bolt-hole diameter d<sub>h</sub><span class="unit-input"><input name="dh_mm" type="number" min="0" step="any" value="20"><i>mm</i></span></label>
+              <label>End distance e<sub>1</sub><span class="unit-input"><input name="e1_mm" type="number" min="0" step="any" value="30"><i>mm</i></span></label>
+            </div>
+            <div class="linked"><label>Edge distance e<sub>2</sub><span class="unit-input"><input id="e2-input" name="e2_mm" type="number" min="0" step="any" value="70"><i>mm</i></span></label><b>× 2</b><label>Plate width b<span class="unit-input"><input id="b-input" name="b_mm" type="number" min="0" step="any" value="140"><i>mm</i></span></label></div>
+            <p class="note">Enter either b or e<sub>2</sub>; the other value updates automatically using b = 2e<sub>2</sub>.</p>
+          </fieldset>
+        </form>
+        <div id="message-box" class="message-box" aria-live="polite"></div>
+      </aside>
+
+      <section class="card results-card">
+        <header><div><p class="eyebrow">DESIGN COMPARISON</p><h3>Prediction Results</h3></div><div class="legend"><span class="nsr">NSR</span><span class="sof">SOF</span><span class="bf">BF</span></div></header>
+        <div id="result-summary" class="summary skeleton"><span>Prediction range</span><strong>Calculating…</strong></div>
+        <div class="table-scroll"><table><thead><tr><th>Design method</th><th>Nominal resistance</th><th>Governing mode</th><th>Relative value</th></tr></thead><tbody id="results-body"></tbody></table></div>
+        <div id="parameters-strip" class="parameters"></div>
+        <p class="result-note">Nominal ultimate resistances are reported without resistance, safety or partial factors.</p>
+      </section>
+    </div>
+  </section>
+
+  <section class="tab-panel" id="methods-panel">
+    <article class="method-lead"><p class="eyebrow">METHODOLOGY, SCOPE AND REFERENCES</p><h3>Technical Basis of the Calculator</h3><p>The calculator evaluates the inner plate of a single-bolt, non-preloaded, double-shear bearing-type connection made from WAAM austenitic or duplex stainless steel.</p></article>
+    <article class="method-section"><span>01</span><div><h3>Scope</h3><div class="scope-grid"><section><h4>Included</h4><ul><li>Standard circular bolt holes</li><li>Direction-dependent f<sub>y</sub> and f<sub>u</sub></li><li>Net-section rupture (NSR)</li><li>Shear-out failure (SOF)</li><li>Bearing failure (BF)</li></ul></section><section class="excluded"><h4>Outside the scope</h4><ul><li>Bolt shear, tension or combined failure</li><li>Friction, slip resistance and bolt pretension</li><li>Outer cover plate failure</li><li>Multiple-bolt and staggered-hole effects</li><li>Fatigue, seismic, fire and corrosion design</li></ul></section></div><p class="callout">Bolt resistance and outer cover plate resistance must be verified separately.</p></div></article>
+    <article class="method-section"><span>02</span><div><h3>Mandatory Input Validation</h3><div class="table-scroll"><table class="technical-table"><thead><tr><th>Input</th><th>Requirement</th></tr></thead><tbody><tr><td>Material</td><td>ASS or DSS</td></tr><tr><td>Strengths and dimensions</td><td>Finite values greater than zero; f<sub>y</sub> ≤ f<sub>u</sub></td></tr><tr><td>d<sub>b</sub></td><td>Positive integer not exceeding 30 mm</td></tr><tr><td>d<sub>h</sub></td><td>Greater than d<sub>b</sub>; decimal values permitted</td></tr><tr><td>Distances</td><td>e<sub>1</sub> &gt; d<sub>h</sub>/2 and e<sub>2</sub> &gt; d<sub>h</sub>/2</td></tr><tr><td>Width</td><td>b &gt; d<sub>h</sub> and b = 2e<sub>2</sub></td></tr></tbody></table></div><div class="clearance"><div><b>d<sub>b</sub> &lt; 12</b><span>0.5 ≤ d<sub>h</sub>−d<sub>b</sub> ≤ 1.5 mm</span></div><div><b>12 ≤ d<sub>b</sub> ≤ 23</b><span>1.5 ≤ d<sub>h</sub>−d<sub>b</sub> ≤ 2.5 mm</span></div><div><b>24 ≤ d<sub>b</sub> ≤ 30</b><span>2.5 ≤ d<sub>h</sub>−d<sub>b</sub> ≤ 3.5 mm</span></div></div></div></article>
+    <article class="method-section"><span>03</span><div><h3>Implemented Methods</h3><div class="table-scroll"><table class="technical-table wide"><thead><tr><th>Method</th><th>Original application</th><th>Implementation</th></tr></thead><tbody><tr><td>ANSI/AISC 360-22</td><td>Structural steel buildings</td><td>NSR, net shear-plane SOF and bearing cap</td></tr><tr><td>ANSI/AISC 370-21</td><td>Structural stainless steel buildings</td><td>NSR, gross shear-plane SOF and bearing cap</td></tr><tr><td>ASCE/SEI 8-22</td><td>Cold-formed stainless steel members</td><td>Modified NSR, net shear-plane SOF and double-shear bearing cap</td></tr><tr><td>EN 1993-1-8:2024</td><td>Steel joints</td><td>NSR and decomposed end-distance/bearing branches</td></tr><tr><td>EN 1993-1-4:2025</td><td>Stainless steel structures</td><td>NSR and edge-distance-dependent SOF/bearing branches</td></tr><tr><td>Literature</td><td>WAAM and conventional steel research</td><td>Guo et al. SOF with Teh and Uz bearing cap</td></tr><tr><td>Proposed-gv</td><td>Current WAAM ASS/DSS study</td><td>Recalibrated gross shear-plane method</td></tr><tr><td>Proposed-av</td><td>Current WAAM ASS/DSS study</td><td>Recalibrated active shear-plane method</td></tr></tbody></table></div></div></article>
+    <article class="method-section"><span>04</span><div><h3>Proposed-Method Applicability</h3><div class="limits"><b>e<sub>1</sub>/d<sub>h</sub> ≥ 1.2</b><b>e<sub>2</sub>/d<sub>h</sub> ≥ 1.2</b><b>t ≤ 5 mm</b></div><p>Results outside these conditions are reported as extrapolations and should be used with caution.</p></div></article>
+    <article class="method-section"><span>05</span><div><h3>Standards and Research References</h3><h4>Implemented and supporting standards</h4><ol class="references"><li>ANSI/AISC 360-22. <em>Specification for Structural Steel Buildings.</em> AISC, 2022.</li><li>ANSI/AISC 370-21. <em>Specification for Structural Stainless Steel Buildings.</em> AISC, 2021.</li><li>ASCE/SEI 8-22. <em>Specification for the Design of Cold-Formed Stainless Steel Structural Members.</em> ASCE, 2022.</li><li>EN 1993-1-8:2024. <em>Eurocode 3 — Part 1-8: Joints.</em> CEN, 2024.</li><li>EN 1993-1-4:2025. <em>Eurocode 3 — Part 1-4: Stainless Steel Structures.</em> CEN, 2025.</li><li>EN 1993-1-1:2022; AISI S100-24; EN 1990:2023.</li></ol><h4>Research references</h4><ol class="references"><li>Guo X, Kyvelou P, Ye J, Teh LH, Gardner L. <em>Thin-Walled Structures</em>. 2022;181:110029.</li><li>Teh LH, Uz ME. <em>Journal of Structural Engineering</em>. 2015;141(6):04014152.</li><li>Teh LH, Uz ME. <em>Journal of Structural Engineering</em>. 2016;142(11):04016098.</li><li>Xing HY, Teh LH, Jiang ZY, Ahmed A. <em>Journal of Structural Engineering</em>. 2020;146(4):04020018.</li><li>Zuo W, Chen MT, Zhao O, Gardner L. <em>Journal of Structural Engineering</em>. 2025;151(2):04024205.</li><li>Zuo W, Chen MT, Liu SW, Yun X, Zhao O, Huang Y, Cheng B. <em>Engineering Structures</em>. 2024;317:118501.</li></ol></div></article>
+  </section>
+</main>
+<footer><span>WAAM stainless steel single-bolt double-shear connections</span><span>Nominal resistance calculator</span></footer>
+<script src="calculator.js"></script><script src="app.js"></script>
+</body>
+</html>
